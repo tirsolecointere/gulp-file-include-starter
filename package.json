@@ -1,0 +1,44 @@
+{
+  "name": "gulp-file-include-starter",
+  "version": "1.0.0",
+  "description": "Gulp + gulp-file-include starter template.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "preinstall": "npx npm-force-resolutions"
+  },
+  "resolutions": {
+    "graceful-fs": "4.2.3"
+  },
+  "author": "Tirso Lecointere",
+  "license": "MIT",
+  "devDependencies": {
+    "browser-sync": "^2.18.13",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-clean-css": "^3.9.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-file-include": "^2.3.0",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-imagemin": "^3.3.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^3.0.0"
+  },
+  "dependencies": {
+    "bootstrap": "^5.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tirsolecointere/gulp-file-include-starter.git"
+  },
+  "keywords": [
+    "gulp",
+    "gulp-file-include",
+    "bootstrap",
+    "sass"
+  ],
+  "bugs": {
+    "url": "https://github.com/tirsolecointere/gulp-file-include-starter/issues"
+  },
+  "homepage": "https://github.com/tirsolecointere/gulp-file-include-starter#readme"
+}
