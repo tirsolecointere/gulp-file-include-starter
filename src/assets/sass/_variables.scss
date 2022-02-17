@@ -1,0 +1,23 @@
+$enable-negative-margins:       true;
+$min-contrast-ratio:            1.5;
+$enable-smooth-scroll:          false;
+
+$tertiary: blue;
+
+$custom-colors: (
+    'tertiary': $tertiary,
+);
+
+//-- MIXINS
+@mixin square($size) {
+    width: $size;
+    height: $size;
+}
+
+@mixin absolute($top, $right, $bottom, $left) {
+    position: absolute;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+}

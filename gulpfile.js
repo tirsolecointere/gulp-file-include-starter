@@ -17,7 +17,7 @@ gulp.task('serve', ['sass', 'compressJs', 'fileinclude-watch', 'compressImage'],
         server: './build'
     });
 
-    gulp.watch('src/assets/sass/*.sass', ['sass']);
+    gulp.watch('src/assets/sass/**/*.scss', ['sass']);
     gulp.watch('src/assets/js/*.js', ['compressJs']);
     gulp.watch('src/assets/img/*', ['compressImage']);
     gulp.watch('./**/*.html', ['fileinclude-watch'])
@@ -25,7 +25,7 @@ gulp.task('serve', ['sass', 'compressJs', 'fileinclude-watch', 'compressImage'],
 
 // Sass task.
 gulp.task('sass', function () {
-    return gulp.src('src/assets/sass/*.sass')
+    return gulp.src('src/assets/sass/*.scss')
         .pipe(sass())
         .pipe(autoprefixer({
             browsers: ['last 2 versions'],
@@ -78,12 +78,12 @@ gulp.task('vendors-scripts', function () {
 });
 
 // Copyfiles task.
-gulp.task('copy-files', function () {
-    gulp.src([
-        'src/config/web.config'
-    ])
-    .pipe(gulp.dest('./build'));
-});
+// gulp.task('copy-files', function () {
+//     gulp.src([
+//         'src/config/web.config'
+//     ])
+//     .pipe(gulp.dest('./build'));
+// });
 
 // Compile project.
 gulp.task('build-project', [
@@ -92,8 +92,8 @@ gulp.task('build-project', [
     'compressJs',
     'fileinclude',
     'vendors-scripts',
-    'copy-files']
-);
+    // 'copy-files'
+]);
 
 // Compile and start project.
 gulp.task('default', ['build-project', 'serve']);

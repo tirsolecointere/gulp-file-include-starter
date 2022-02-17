@@ -1,0 +1,46 @@
+$utilities: () !default;
+
+$utilities: map-merge(
+    (
+        "font-size": (
+            property: font-size,
+            class: fs,
+            values: (
+                1: 0.75rem,
+                2: 0.8125rem,
+                3: 0.875rem,
+                4: 1.25rem,
+                5: 1.5rem,
+                6: 2rem,
+            ),
+        ),
+        'object-fit': (
+            property: object-fit,
+            class: object,
+            values: cover contain,
+        ),
+    ),
+    $utilities
+);
+
+.nice-scrollbar {
+    /* width */
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: rgb(224, 224, 224);
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: rgb(199, 199, 199);
+    }
+}
