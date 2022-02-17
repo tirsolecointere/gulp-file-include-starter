@@ -58,5 +58,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import './node_modules/bootstrap/scss/utilities/api';
 
 // components
+// @import 'components/name';
 
+// custom scss
 @import 'custom';
