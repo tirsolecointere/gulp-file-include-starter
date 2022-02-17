@@ -22,7 +22,7 @@ Files are compiled into `/build` directory.
 * gulp-htmlmin
 * gulp-imagemin
 
-# Node and NPM versions
+## Node and NPM versions
 
 * Node v12.14.1
-* npm 6.13.4
+* npm v6.13.4
