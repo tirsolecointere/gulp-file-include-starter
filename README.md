@@ -12,12 +12,12 @@ Files are compiled into `/build` directory.
 
 ## Extras inside the project
 
-* Bootstrap v5.0.2
+* Bootstrap v5.*
 * browser-sync
 * gulp-sass
 * gulp-autoprefixer
 * gulp-clean-css
-* gulp-concat 
+* gulp-concat
 * gulp-uglify
 * gulp-htmlmin
 * gulp-imagemin
