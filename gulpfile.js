@@ -45,7 +45,7 @@ gulp.task('compressJs', function () {
 
 // Images task.
 gulp.task('compressImage', function () {
-    return gulp.src('src/assets/img/**')
+    return gulp.src('src/assets/img/**/*')
         // .pipe(imagemin({
         //     progressive: true,
         //     optimizationLevel: 3
@@ -77,13 +77,13 @@ gulp.task('vendors-scripts', function () {
         .pipe(gulp.dest('./build/assets/js/'));
 });
 
-// Copyfiles task.
-// gulp.task('copy-files', function () {
-//     gulp.src([
-//         'src/config/web.config'
-//     ])
-//     .pipe(gulp.dest('./build'));
-// });
+// fonts task.
+gulp.task('fonts', function () {
+    gulp.src([
+        './node_modules/bootstrap-icons/font/fonts/*'
+    ])
+    .pipe(gulp.dest('./build/assets/fonts'));
+});
 
 // Compile project.
 gulp.task('build-project', [
@@ -92,7 +92,7 @@ gulp.task('build-project', [
     'compressJs',
     'fileinclude',
     'vendors-scripts',
-    // 'copy-files'
+    'fonts'
 ]);
 
 // Compile and start project.
