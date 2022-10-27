@@ -1,99 +1,144 @@
-const { includes } = require('lodash');
+const   gulp                    = require('gulp'),
+        sass                    = require('gulp-sass')(require('sass')),
+        browserSync             = require('browser-sync').create(),
+        autoprefixer            = require('gulp-autoprefixer'),
+        cleanCSS                = require('gulp-clean-css'),
+        fileinclude             = require('gulp-file-include');
+        // concat                  = require('gulp-concat');
 
-var gulp                = require('gulp'),
-    browserSync         = require('browser-sync').create(),
-    sass                = require('gulp-sass'),
-    // uglify              = require('gulp-uglify'),
-    autoprefixer        = require('gulp-autoprefixer'),
-    cleanCSS            = require('gulp-clean-css'),
-    // imagemin            = require('gulp-imagemin'),
-    fileinclude         = require('gulp-file-include');
-    // htmlmin             = require('gulp-htmlmin'),
-    concat              = require('gulp-concat');
 
-// Static Server + watching scss/js/html files.
-gulp.task('serve', ['sass', 'compressJs', 'fileinclude-watch', 'compressImage'], function () {
-    browserSync.init({
-        server: './build'
-    });
+// FILE PATHS
+const paths = {
+    scss: 'src/assets/sass/**/*.scss',
+    scripts: {
+        core: 'src/assets/js/**/*.js',
+        plugins: {
+            bootstrap: './node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
+            swiper: './node_modules/swiper/swiper-bundle.min.js'
+        }
+    },
+    img: 'src/assets/img/**/*',
+    fonts: {
+        bootstrapIcons: './node_modules/bootstrap-icons/font/fonts/*'
+    },
+    fileInclude: {
+        pages: 'src/pages/*.html',
+        includes: 'src/includes/**/*.html',
+        includesFolder: 'src/includes'
+    }
+}
 
-    gulp.watch('src/assets/sass/**/*.scss', ['sass']);
-    gulp.watch('src/assets/js/*.js', ['compressJs']);
-    gulp.watch('src/assets/img/*', ['compressImage']);
-    gulp.watch('./**/*.html', ['fileinclude-watch'])
-});
 
-// Sass task.
-gulp.task('sass', function () {
-    return gulp.src('src/assets/sass/*.scss')
-        .pipe(sass())
-        .pipe(autoprefixer({
-            browsers: ['last 2 versions'],
-            cascade: false
-        }))
+// SOURCES TASKS
+const compileStyles = () => {
+    return gulp.src(paths.scss)
+        .pipe(sass()).on('error', sass.logError)
+        .pipe(autoprefixer())
         .pipe(cleanCSS())
         .pipe(gulp.dest('./build/assets/css'))
         .pipe(browserSync.stream());
-});
-
-// Js task.
-gulp.task('compressJs', function () {
-    return gulp.src('src/assets/js/*.js')
-        // .pipe(uglify())
+}
+const compileScripts = () => {
+    return gulp.src(paths.scripts.core)
         .pipe(gulp.dest('./build/assets/js'))
-});
-
-// Images task.
-gulp.task('compressImage', function () {
-    return gulp.src('src/assets/img/**/*')
-        // .pipe(imagemin({
-        //     progressive: true,
-        //     optimizationLevel: 3
-        // }))
+}
+const compileMarkup = () => {
+    return gulp.src(paths.fileInclude.pages)
+        .pipe(fileinclude({
+            prefix: '@@',
+            basepath: paths.fileInclude.includesFolder
+        }))
+        .pipe(gulp.dest('./build'))
+}
+const compileImages = () => {
+    return gulp.src(paths.img)
         .pipe(gulp.dest('./build/assets/img'))
-});
+}
+const compileFonts = () => {
+    return gulp.src(paths.fonts.bootstrapIcons)
+        .pipe(gulp.dest('./build/assets/fonts'))
+}
+const compilePluginScripts = () => {
+    var plugins = paths.scripts.plugins;
 
-// gulp include task
-gulp.task('fileinclude', function() {
-    gulp.src('src/pages/*.html')
-    .pipe(fileinclude({
-        prefix: '@@',
-        basepath: 'src/includes'
-    }))
-    .pipe(gulp.dest('./build'));
-});
-
-// Create a task that ensures the `fileinclude` task is complete before reloading browsers.
-gulp.task('fileinclude-watch', ['fileinclude'], function () {
-    browserSync.reload();
-});
-
-// Vendor scripts tasks.
-gulp.task('vendors-scripts', function () {
     return gulp.src([
-            './node_modules/bootstrap/dist/js/bootstrap.bundle.min.js',
-        ])
-        .pipe(concat('vendors.js'))
-        .pipe(gulp.dest('./build/assets/js/'));
-});
+        plugins.bootstrap,
+        plugins.swiper
+    ]).pipe(gulp.dest('./build/assets/js/plugins'))
+}
 
-// fonts task.
-gulp.task('fonts', function () {
-    gulp.src([
-        './node_modules/bootstrap-icons/font/fonts/*'
-    ])
-    .pipe(gulp.dest('./build/assets/fonts'));
-});
 
-// Compile project.
-gulp.task('build-project', [
-    'sass',
-    'compressImage',
-    'compressJs',
-    'fileinclude',
-    'vendors-scripts',
-    'fonts'
-]);
+//// WATCH TASKS
+const watchStyles = () => {
+    gulp.watch(paths.scss, compileStyles);
+}
+const watchScripts = () => {
+    gulp.watch(paths.scripts.core, gulp.series(compileScripts, serverReload));
+}
+const watchMarkup = () => {
+    gulp.watch([
+        paths.fileInclude.pages,
+        paths.fileInclude.includes
+    ], gulp.series(compileMarkup, serverReload));
+}
+const watchImages = () => {
+    gulp.watch(paths.img, gulp.series(compileImages, serverReload));
+}
+const watchFonts = () => {
+    gulp.watch(paths.fonts.bootstrapIcons, gulp.series(compileFonts, serverReload));
+}
+const watchPluginScripts = () => {
+    var plugins = paths.scripts.plugins;
 
-// Compile and start project.
-gulp.task('default', ['build-project', 'serve']);
+    gulp.watch([
+        plugins.bootstrap,
+        plugins.swiper
+    ], compilePluginScripts);
+}
+
+
+// SERVER TASKS
+const startServer = (done) => {
+    browserSync.init({
+        server: {
+            baseDir: './build'
+        },
+        notify: false
+    });
+    done();
+}
+
+const serverReload = (done) => {
+    browserSync.reload();
+    done();
+}
+
+
+const compile = gulp.parallel(
+    compileStyles,
+    compileScripts,
+    compileMarkup,
+    compileImages,
+    compileFonts,
+    compilePluginScripts
+);
+compile.description = 'compile all sources.';
+
+const watch = gulp.parallel(
+    watchStyles,
+    watchScripts,
+    watchMarkup,
+    watchImages,
+    watchFonts,
+    watchPluginScripts
+);
+watch.description = 'watch for changes on all sources';
+
+const serve = gulp.series(compile, startServer);
+serve.description = 'serve compiled sources on local server'
+
+// Run "gulp build" to compile project
+exports.build = compile;
+
+// Run "gulp" to compile project and start local server
+exports.default = gulp.parallel(serve, watch);
