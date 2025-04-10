@@ -1,11 +1,17 @@
 const   gulp                    = require('gulp'),
         sass                    = require('gulp-sass')(require('sass')),
+        sourcemaps              = require('gulp-sourcemaps'),
         browserSync             = require('browser-sync').create(),
         autoprefixer            = require('gulp-autoprefixer'),
         cleanCSS                = require('gulp-clean-css'),
         fileinclude             = require('gulp-file-include');
         // concat                  = require('gulp-concat');
 
+
+// VARIABLES
+const consts = {
+    page_title:     'Gulp with File Include - Starter Template',
+}
 
 // FILE PATHS
 const paths = {
@@ -22,19 +28,22 @@ const paths = {
         bootstrapIcons: './node_modules/bootstrap-icons/font/fonts/*'
     },
     fileInclude: {
-        pages: 'src/pages/*.html',
+        pages: 'src/pages/**',
         includes: 'src/includes/**/*.html',
-        includesFolder: 'src/includes'
-    }
+        includesFolder: 'src/includes',
+    },
+    data: 'src/data/*.json',
 }
 
 
 // SOURCES TASKS
 const compileStyles = () => {
     return gulp.src(paths.scss)
+        .pipe(sourcemaps.init())
         .pipe(sass()).on('error', sass.logError)
         .pipe(autoprefixer())
         .pipe(cleanCSS())
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./build/assets/css'))
         .pipe(browserSync.stream());
 }
@@ -46,7 +55,8 @@ const compileMarkup = () => {
     return gulp.src(paths.fileInclude.pages)
         .pipe(fileinclude({
             prefix: '@@',
-            basepath: paths.fileInclude.includesFolder
+            basepath: paths.fileInclude.includesFolder,
+            context: consts
         }))
         .pipe(gulp.dest('./build'))
 }
@@ -78,7 +88,8 @@ const watchScripts = () => {
 const watchMarkup = () => {
     gulp.watch([
         paths.fileInclude.pages,
-        paths.fileInclude.includes
+        paths.fileInclude.includes,
+        paths.data
     ], gulp.series(compileMarkup, serverReload));
 }
 const watchImages = () => {

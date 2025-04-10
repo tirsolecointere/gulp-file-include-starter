@@ -2,16 +2,16 @@ $utilities: () !default;
 
 $utilities: map-merge(
     (
-        "font-size": (
+        "font-size-small": (
             property: font-size,
-            class: fs,
+            class: 'tx-small',
             values: (
-                1: 0.75rem,
-                2: 0.8125rem,
-                3: 0.875rem,
-                4: 1.25rem,
-                5: 1.5rem,
-                6: 2rem,
+                0: 1rem,        // 16px
+                1: 0.875rem,    // 14px
+                2: 0.8125rem,   // 13px
+                3: 0.75rem,     // 12px
+                4: 0.6875rem,   // 11px
+                5: 0.625rem,    // 10px
             ),
         ),
         'object-fit': (
@@ -19,28 +19,46 @@ $utilities: map-merge(
             class: object,
             values: cover contain,
         ),
+        'aspect-ratio': (
+            property: aspect-ratio,
+            class: ratio,
+            values: (
+                'square': unquote("1/1")
+            ),
+        ),
+        'background-color': (
+            property: background-color,
+            class: bg,
+            local-vars: (
+                "bg-opacity": 1
+            ),
+            values: map-merge($utilities-bg-colors, $custom-colors)
+        ),
+        'letter-spacing': (
+            property: letter-spacing,
+            class: ls,
+            values: (
+                0\.5: 0.5px,
+                1: 1px,
+                2: 1.5px,
+                3: 2px
+            ),
+        ),
     ),
     $utilities
 );
 
 .nice-scrollbar {
-    /* width */
     &::-webkit-scrollbar {
-        width: 6px;
+        width: 8px;
     }
-
-    /* Track */
     &::-webkit-scrollbar-track {
         background: transparent;
     }
-
-    /* Handle */
     &::-webkit-scrollbar-thumb {
         background: rgb(224, 224, 224);
-    }
-
-    /* Handle on hover */
-    &::-webkit-scrollbar-thumb:hover {
-        background: rgb(199, 199, 199);
+        &:hover {
+            background: rgb(199, 199, 199);
+        }
     }
 }

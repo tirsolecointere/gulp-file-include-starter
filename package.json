@@ -1,6 +1,6 @@
 {
   "name": "gulp-file-include-starter",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Gulp + gulp-file-include starter template.",
   "main": "index.js",
   "scripts": {
@@ -16,12 +16,13 @@
     "gulp-concat": "^2.6.1",
     "gulp-file-include": "^2.3.0",
     "gulp-sass": "^5.1.0",
-    "sass": "^1.55.0"
+    "gulp-sourcemaps": "^3.0.0",
+    "sass": "1.77.6"
   },
   "dependencies": {
-    "bootstrap": "^5.2.2",
-    "bootstrap-icons": "^1.9.1",
-    "swiper": "^8.4.2"
+    "bootstrap": "^5.3.5",
+    "bootstrap-icons": "^1.11.3",
+    "swiper": "^11.2.6"
   },
   "repository": {
     "type": "git",

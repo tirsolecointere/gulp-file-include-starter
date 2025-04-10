@@ -14,8 +14,8 @@ Files are compiled into `/build` directory.
 ## Extras inside the project
 
 * Bootstrap v5.*
-* Bootstrap Icons v1.9.1
-* Swiper v8.4.2
+* Bootstrap Icons v1.*
+* Swiper v11.2.6
 * browser-sync
 * gulp-sass
 * gulp-autoprefixer

@@ -1,14 +1,49 @@
 $enable-negative-margins:       true;
-$min-contrast-ratio:            1.5;
+$min-contrast-ratio:            2;
 $enable-smooth-scroll:          false;
 
-// $font-family-base:      'Barlow', sans-serif;
-// $headings-font-family:  'Bebas Neue', cursive;
-// $headings-font-weight: 600;
-// $headings-margin-bottom: 1rem;
-// $link-decoration: none;
+// $font-family-base:          "Inter", sans-serif;
+// $font-weight-base:          400;
+// $headings-font-family:      $font-family-base;
+// $headings-font-weight:      700;
+// $headings-margin-bottom:    1rem;
+// $link-decoration:           none;
 
-$tertiary: blue;
+$body-color:    #070707;
+// $body-secondary-color:      rgba($body-color, .75);
+// $body-tertiary-color:       rgba($body-color, .5);
+
+$primary:       indigo;
+// $secondary:     #FB2576;
+// $warning:       #f5d41b;
+// $danger:        #d33710;
+// $success:       #14c941;
+// $light:         #f7f7f7;
+// $dark:          #333333;
+$tertiary:      blue;
+
+$link-color: $primary;$body-tertiary-color:       rgba($body-color, .5);
+
+$border-color:  #D5DFE4;
+
+$hr-border-color: $border-color;
+$hr-opacity: 1;
+
+$focus-ring-width: 1px;
+$focus-ring-opacity: .5;
+$focus-ring-color: rgba(black, $focus-ring-opacity);
+$focus-ring-box-shadow: 0 0 0 $focus-ring-width $focus-ring-color;
+
+$btn-focus-box-shadow: none;
+// $btn-font-weight: 500;
+// $btn-border-radius: 0;
+// $btn-border-radius-sm: 0;
+// $btn-border-radius-lg: 0;
+// $input-border-radius: $btn-border-radius-lg;
+// $input-border-radius-sm: $btn-border-radius-sm;
+// $input-border-radius-lg: $btn-border-radius-lg;
+
+$form-label-font-size: .875rem;
 
 $custom-colors: (
     'tertiary': $tertiary,
